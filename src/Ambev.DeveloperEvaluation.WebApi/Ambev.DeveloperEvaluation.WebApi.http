@@ -3,4 +3,3 @@
 GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
-###
