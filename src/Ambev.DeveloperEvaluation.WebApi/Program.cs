@@ -69,16 +69,31 @@ public class Program
             app.UseBasicHealthChecks();
 
             app.MapControllers();
+            
+            ApplyMigration(app);
 
             app.Run();
         }
         catch (Exception ex)
         {
             Log.Fatal(ex, "Application terminated unexpectedly");
+            Console.WriteLine($"An error occurred: {ex.Message}");
         }
         finally
         {
             Log.CloseAndFlush();
         }
+    }
+
+    private static void ApplyMigration(WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+        if (db.Database.GetPendingMigrations().Any())
+        {
+            Log.Information("Applying migrations...");
+            db.Database.Migrate();
+        }
+        Log.Information("No pending migrations found. Database is up to date. Starting the application...");
     }
 }
