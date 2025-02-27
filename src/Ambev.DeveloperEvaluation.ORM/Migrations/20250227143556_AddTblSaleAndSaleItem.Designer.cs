@@ -24,6 +24,8 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            
+            modelBuilder.HasSequence("SaleNumber");
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Product", b =>
                 {
@@ -132,7 +134,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("SaleNumber")
-                        .HasColumnType("integer");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValueSql("NEXT VALUE FOR SaleNumber");
 
                     b.Property<decimal>("TotalSale")
                         .HasColumnType("decimal(18,2)");

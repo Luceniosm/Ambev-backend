@@ -13,13 +13,16 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence(
+                name: "SaleNumber");
+            
             migrationBuilder.CreateTable(
                 name: "Sales",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ClienteName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    SaleNumber = table.Column<int>(type: "integer", nullable: false),
+                    SaleNumber = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "NEXT VALUE FOR SaleNumber"),
                     SaleDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Customer = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     TotalSale = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
