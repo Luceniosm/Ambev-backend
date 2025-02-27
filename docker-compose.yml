@@ -24,8 +24,8 @@ services:
 
     environment:
       POSTGRES_DB: developer_evaluation
-      POSTGRES_USER: developer
-      POSTGRES_PASSWORD: ev@luAt10n
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: pass@word
     ports:
       - "5432"
     restart: unless-stopped

@@ -1,0 +1,37 @@
+name: .NET Core Desktop CI
+
+on:
+  push:
+    branches: [ "Master" ]
+  pull_request:
+    branches: [ "Master" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Release]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: Ambev.DeveloperEvaluation.sln  # Nome do arquivo da solução.
+      Test_Project_Path: tests\Ambev.DeveloperEvaluation.Unit\Ambev.DeveloperEvaluation.Unit.csproj  # Caminho do projeto de testes.
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x  # Altere para a versão do .NET que você usa.
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Execute unit tests
+      run: dotnet test $env:Test_Project_Path
+
+    - name: Build the application
+      run: msbuild $env:Solution_Name /t:Build /p:Configuration=${{ matrix.configuration }}
