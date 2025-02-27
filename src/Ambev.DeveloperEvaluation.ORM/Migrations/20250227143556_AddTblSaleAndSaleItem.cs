@@ -24,6 +24,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Customer = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     TotalSale = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Branch = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    IsCanceled = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },

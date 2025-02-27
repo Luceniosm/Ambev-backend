@@ -10,6 +10,7 @@ public class Sale: BaseEntity
     public string Customer { get; private set; }
     public decimal TotalSale { get; private set; }
     public string Branch { get; private set; }
+    public bool IsCanceled { get; private set; }
     
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
@@ -31,6 +32,12 @@ public class Sale: BaseEntity
     public void AlterTotalSale(decimal totalSale)
     {
         TotalSale = totalSale;
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void CancelSale()
+    {
+        IsCanceled = true;
         UpdatedAt = DateTime.Now;
     }
 }
