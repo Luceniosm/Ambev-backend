@@ -13,17 +13,20 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence(
+                name: "SeqSaleNumber");
+            
             migrationBuilder.CreateTable(
                 name: "Sales",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ClienteName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    SaleNumber = table.Column<int>(type: "integer", nullable: false),
+                    SaleNumber = table.Column<long>(type: "bigint", nullable: false),
                     SaleDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Customer = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     TotalSale = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Branch = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    IsCanceled = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -41,6 +44,8 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     SaleId = table.Column<Guid>(type: "uuid", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     IsCanceled = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -74,6 +79,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropSequence(
+                name: "SeqSaleNumber");
+            
             migrationBuilder.DropTable(
                 name: "SaleItems");
             

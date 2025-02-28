@@ -24,6 +24,8 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            
+            modelBuilder.HasSequence("SeqSaleNumber");
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Product", b =>
                 {
@@ -108,15 +110,15 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("ClienteName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                    
+                    b.Property<bool>("IsCanceled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Customer")
                         .IsRequired()
@@ -126,8 +128,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Property<DateTime>("SaleDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("SaleNumber")
-                        .HasColumnType("integer");
+                    b.Property<long>("SaleNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("TotalSale")
                         .HasColumnType("decimal(18,2)");
@@ -157,6 +160,12 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+                    
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+                    
+                    b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("ProductId")
