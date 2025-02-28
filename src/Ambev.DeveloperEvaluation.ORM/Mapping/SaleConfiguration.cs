@@ -12,9 +12,9 @@ public class SaleConfiguration: IEntityTypeConfiguration<Sale>
 
         builder.HasKey(s => s.Id);
         builder.Property(s => s.Id).IsRequired();
-        builder.Property(s => s.ClienteName).HasMaxLength(100).IsRequired();
-        builder.Property(s => s.SaleNumber).IsRequired();
+        builder.Property(s => s.SaleNumber).IsRequired().HasDefaultValueSql("nextval('\"SeqSaleNumber\"')");
         builder.Property(s => s.SaleDate).IsRequired();
+        builder.Property(s => s.IsCanceled).IsRequired().HasDefaultValue(false);
         builder.Property(s => s.Customer).HasMaxLength(100).IsRequired();
         builder.Property(s => s.Branch).HasMaxLength(100).IsRequired();
         

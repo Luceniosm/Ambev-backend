@@ -25,7 +25,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
             
-            modelBuilder.HasSequence("SaleNumber");
+            modelBuilder.HasSequence("SeqSaleNumber");
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Product", b =>
                 {
@@ -110,11 +110,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("ClienteName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -133,10 +128,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Property<DateTime>("SaleDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("SaleNumber")
+                    b.Property<long>("SaleNumber")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValueSql("NEXT VALUE FOR SaleNumber");
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("TotalSale")
                         .HasColumnType("decimal(18,2)");
@@ -169,6 +163,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasColumnType("decimal(18,2)");
                     
                     b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+                    
+                    b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("ProductId")

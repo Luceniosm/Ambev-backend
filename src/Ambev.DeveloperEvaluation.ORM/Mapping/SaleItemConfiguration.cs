@@ -16,12 +16,14 @@ public class SaleItemConfiguration: IEntityTypeConfiguration<SaleItem>
         builder.Property(si => si.SaleId).IsRequired();
         builder.Property(si => si.Quantity).IsRequired();
         builder.Property(si => si.Price).HasColumnType("decimal(18,2)").IsRequired();
+        builder.Property(si => si.TotalPrice).HasColumnType("decimal(18,2)").IsRequired();
+        builder.Property(si => si.Discount).HasColumnType("decimal(18,2)").IsRequired();
         builder.Property(si => si.IsCanceled).IsRequired().HasDefaultValue(false);
         builder.Property(si => si.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
         builder.Property(si => si.UpdatedAt);
 
         builder.HasOne(si => si.Sale)
-           .WithMany(s => s.SaleItens)
+           .WithMany(s => s.SaleItems)
            .HasForeignKey(si => si.SaleId)
            .OnDelete(DeleteBehavior.ClientSetNull);
 
