@@ -29,12 +29,25 @@ public class Sale: BaseEntity
     public void AlterTotalSale(decimal totalSale)
     {
         TotalSale = totalSale;
-        UpdatedAt = DateTime.Now;
+    }
+
+    public void AlterBranch(string branch)
+    {
+        Branch = branch;
+    }
+    public void AlterCustomer(string customer)
+    {
+        Customer = customer;
+    }
+
+    public void AlterUpdatedAt()
+    {
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void CancelSale()
     {
         IsCanceled = true;
-        UpdatedAt = DateTime.Now;
+        UpdatedAt = DateTime.UtcNow;
     }
 }

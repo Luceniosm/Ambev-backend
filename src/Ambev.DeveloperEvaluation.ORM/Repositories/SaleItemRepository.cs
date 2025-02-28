@@ -16,4 +16,10 @@ public class SaleItemRepository : ISaleItemRepository
         await _context.SaleItems.AddRangeAsync(saleItems, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task UpdateSalesItems(List<SaleItem> saleItems, CancellationToken cancellationToken = default)
+    {
+        _context.SaleItems.UpdateRange(saleItems);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }
