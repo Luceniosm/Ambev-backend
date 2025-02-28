@@ -41,7 +41,7 @@ public class SaleItem: BaseEntity
         return (price * quantity) - Discount;
     }
 
-    public void UpdateQuantity(int newQuantity, decimal price)
+    public void UpdateQuantityPrice(int newQuantity, decimal price)
     {
         Quantity = newQuantity;
         TotalPrice = CalculateDiscountedPrice(price, newQuantity);

@@ -14,7 +14,10 @@ public class SaleRepository: ISaleRepository
     
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _context.Sales.FirstOrDefaultAsync(o=> o.Id == id, cancellationToken);
+        return await _context
+            .Sales
+            .Include(el => el.SaleItems)
+            .FirstOrDefaultAsync(o=> o.Id == id, cancellationToken);
     }
     
     public async Task<Sale> CreateSale(Sale sale, CancellationToken cancellationToken = default)

@@ -34,15 +34,15 @@ public class CreateSaleHandlerTests
             Branch = "Amazon",
             TotalSale = 100.0m,
             SaleItems = [
-                new CreateSaleItemDto { ProductId = Guid.NewGuid(), Quantity = 2, Price = 3.5m }
+                new CreateSaleItemDto (Guid.NewGuid(), 2, 3.5m )
             ]
         };
 
         var sale = new Sale(Guid.NewGuid(), createSaleCommand.Customuer, createSaleCommand.Branch, createSaleCommand.TotalSale);
-        var saleResult = new CreateSaleResult { Id = sale.Id };
+        var saleResult = new CreateSaleResult( sale.Id );
 
         _saleRepository.CreateSale(Arg.Any<Sale>(), Arg.Any<CancellationToken>()).Returns(sale);
-        _mapper.Map<CreateSaleResult>(sale).Returns(new CreateSaleResult { Id = saleResult.Id });
+        _mapper.Map<CreateSaleResult>(sale).Returns(new CreateSaleResult(saleResult.Id));
 
         // When
         var result = await _handler.Handle(createSaleCommand, CancellationToken.None);
