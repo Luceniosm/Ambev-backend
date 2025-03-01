@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "bae6582c-8e3a-41b1-a663-b9e61fd248b3",
+		"name": "Ambev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49331"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Username\": \"exemple\",\n  \"Password\": \"Ambev@123456\",\n  \"Phone\": \"12345678901\",\n  \"Email\": \"example@example.com\",\n  \"Status\": 1,\n  \"Role\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{__url}}/api/users",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    const token = pm.response.json().data.token;",
+									"    pm.collectionVariables.set(\"__token\",token);    ",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"example@example.com\",\n  \"Password\": \"Ambev@123456\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{__url}}/api/auth",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{__token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{__url}}/api/Products",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"Products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sale",
+			"item": [
+				{
+					"name": "Sale Creat",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    const id = pm.response.json().data.id;",
+									"    pm.collectionVariables.set(\"__id\",id);    ",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{__token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"custumer\": \"Paul McGren\",\n  \"branch\": \"Compaer\",\n  \"totalSale\": 100,\n  \"saleItems\": [\n    {\n      \"productId\": \"0ded9624-32f6-43bd-a2ca-a53c3034fb96\",\n      \"quantity\": 3,\n      \"price\": 3.5\n    },\n    {\n      \"productId\": \"12a1a395-dc65-4e6c-b7f8-13e606982650\",\n      \"quantity\": 8,\n      \"price\": 4.5\n    },\n    {\n      \"productId\": \"87d2999d-6fe9-49bb-8a96-5aeea262439a\",\n      \"quantity\": 15,\n      \"price\": 4.25\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{__url}}/api/Sales",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"Sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sale Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{__token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Id\": \"e3ef07de-ec61-4e33-988f-435acaef28c3\",\n  \"customer\": \"Lucenio\",\n  \"branch\": \"Compaer\",\n  \"totalSale\": 100,\n  \"saleItems\": [\n    {\n      \"Id\": \"77e514ad-ee8f-45ac-bb5e-5f45db2ac345\",\n      \"productId\": \"0ded9624-32f6-43bd-a2ca-a53c3034fb96\",\n      \"quantity\": 2,\n      \"price\": 3.5\n    },\n    {\n      \"Id\": \"d580e445-6a5c-4060-aed4-2a5df0cd9a22\",\n      \"productId\": \"12a1a395-dc65-4e6c-b7f8-13e606982650\",\n      \"quantity\": 6,\n      \"price\": 4.5\n    },\n    {\n      \"Id\": \"12ef0505-1d6d-4447-b3bb-d3ddc8eb9358\",\n      \"productId\": \"87d2999d-6fe9-49bb-8a96-5aeea262439a\",\n      \"quantity\": 12,\n      \"price\": 4.25\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{__url}}/api/Sales",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"Sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sale Cancel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{__token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"e3ef07de-ec61-4e33-988f-435acaef28c3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{__url}}/api/Sales",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"Sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sale By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{__token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{__url}}/api/Sales/{{__id}}",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"Sales",
+								"{{__id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sale Item",
+			"item": [
+				{
+					"name": "Sale Item Cancel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"12ef0505-1d6d-4447-b3bb-d3ddc8eb9358\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{__url}}/api/SaleItem",
+							"host": [
+								"{{__url}}"
+							],
+							"path": [
+								"api",
+								"SaleItem"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "__url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "__token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "__id",
+			"value": ""
+		}
+	]
+}

@@ -15,9 +15,8 @@ public class CancelSaleCommandHandler : IRequestHandler<CancelSaleCommand, Cance
     {
         var sale = await _saleRepository.GetByIdAsync(request.Id, cancellationToken);
         if (sale == null)
-        {
-            return new CancelSaleResponse(false);
-        }
+            throw new InvalidOperationException("Sale item not found");
+        
         
         sale.CancelSale();
         await _saleRepository.UpdateSale(sale, cancellationToken);

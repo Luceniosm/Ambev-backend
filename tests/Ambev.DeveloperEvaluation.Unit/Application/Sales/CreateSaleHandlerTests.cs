@@ -30,7 +30,7 @@ public class CreateSaleHandlerTests
         // Arrange
         var createSaleCommand = new CreateSaleCommand
         {
-            Customuer = "Paul",
+            Custumer = "Paul",
             Branch = "Amazon",
             TotalSale = 100.0m,
             SaleItems = [
@@ -38,7 +38,7 @@ public class CreateSaleHandlerTests
             ]
         };
 
-        var sale = new Sale(Guid.NewGuid(), createSaleCommand.Customuer, createSaleCommand.Branch, createSaleCommand.TotalSale);
+        var sale = new Sale(Guid.NewGuid(), createSaleCommand.Custumer, createSaleCommand.Branch, createSaleCommand.TotalSale);
         var saleResult = new CreateSaleResult( sale.Id );
 
         _saleRepository.CreateSale(Arg.Any<Sale>(), Arg.Any<CancellationToken>()).Returns(sale);

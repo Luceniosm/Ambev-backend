@@ -5,11 +5,10 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 
-public class UpdateSaleCommandHandler: IRequestHandler< UpdateSaleCommand, UpdateSaleResponse>
+public class UpdateSaleCommandHandler: IRequestHandler<UpdateSaleCommand, UpdateSaleResponse>
 {
     private readonly ISaleRepository _saleRepository;
     private readonly ISaleItemRepository _saleItemRepository;
-    private readonly IMapper _mapper;
     
     public UpdateSaleCommandHandler(
         ISaleRepository saleRepository,
@@ -18,7 +17,6 @@ public class UpdateSaleCommandHandler: IRequestHandler< UpdateSaleCommand, Updat
     {
         _saleRepository = saleRepository;
         _saleItemRepository = saleItemRepository;
-        _mapper = mapper;
     }
             
     public async Task<UpdateSaleResponse> Handle(UpdateSaleCommand request, CancellationToken cancellationToken)

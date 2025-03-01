@@ -20,12 +20,11 @@ services:
 
   ambev.developerevaluation.database:
     container_name: ambev_developer_evaluation_database
-    image: postgres:13
+    image: postgres
 
-    environment:
-      POSTGRES_DB: DeveloperEvaluation
+    environment:      
       POSTGRES_USER: sa
-      POSTGRES_PASSWORD: pass@word
+      POSTGRES_PASSWORD: Pass@word
     ports:
       - "5432:5432"
     restart: unless-stopped
