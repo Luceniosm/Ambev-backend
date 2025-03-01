@@ -19,7 +19,16 @@ public class SaleRepository: ISaleRepository
             .Include(el => el.SaleItems)
             .FirstOrDefaultAsync(o=> o.Id == id, cancellationToken);
     }
-    
+
+    public async Task<Sale?> GetByIdWithSalesItemAndProductAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _context
+            .Sales
+            .Include(el => el.SaleItems)
+                .ThenInclude(el => el.Product)
+            .FirstOrDefaultAsync(o=> o.Id == id, cancellationToken);
+    }
+
     public async Task<Sale> CreateSale(Sale sale, CancellationToken cancellationToken = default)
     {
         await _context.Sales.AddAsync(sale, cancellationToken);
