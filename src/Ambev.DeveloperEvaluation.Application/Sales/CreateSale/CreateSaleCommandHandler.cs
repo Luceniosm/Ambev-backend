@@ -24,7 +24,7 @@ public class CreateSaleCommandHandler: IRequestHandler<CreateSaleCommand, Create
 
     public async Task<CreateSaleResult> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
     {
-        var sale = new Sale(Guid.NewGuid(), request.Customuer, request.Branch, request.TotalSale);
+        var sale = new Sale(Guid.NewGuid(), request.Custumer, request.Branch, request.TotalSale);
         var result = await _saleRepository.CreateSale(sale, cancellationToken);
 
         await CreateSalesItem(sale.Id, request.SaleItems);

@@ -80,9 +80,7 @@ public class SalesController : BaseController
             return BadRequest(validationResult.Errors);
 
         var command = _mapper.Map<CancelSaleCommand>(request);
-        var result = await _mediator.Send(command, cancellationToken);
-        if (!result.Success)
-            return BadRequest(new { message = "Failed to cancel sale" });
+        await _mediator.Send(command, cancellationToken);
         
         return Ok(new ApiResponse
         {
@@ -90,4 +88,7 @@ public class SalesController : BaseController
             Message = "Sale cancelled successfully"
         });
     }
+
+    
+
 }
